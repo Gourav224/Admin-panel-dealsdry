@@ -19,10 +19,4 @@ This project aims to create an admin panel for managing employee data using the 
 - JavaScript
 - Tailwind
 
-
-## Credits
-
-- [React Router](https://reactrouter.com/) - Used for routing within the React application.
-- [Express.js](https://expressjs.com/) - Web framework used for building the backend server.
-- [MongoDB](https://www.mongodb.com/) - NoSQL database used for storing deal data.
   
