@@ -29,6 +29,10 @@ const employeeSchema = new mongoose.Schema({
         enum: ['MCA', 'BCA', 'BSC'],
         required: true
     },
+    avatar: {
+        type: String,
+        required: true
+    }
 
 },
     {

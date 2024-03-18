@@ -1,16 +1,24 @@
-import { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Input from "./Input";
 import employeeService from "../config/employeeApi.js";
+import { useNavigate } from "react-router-dom";
 
 const CreateEmployeeForm = ({ data }) => {
-  const [name, setName] = useState(data?.name || "");
-  const [email, setEmail] = useState(data?.email || "");
-  const [mobileNo, setMobile] = useState(data?.mobile || "");
-  const [designation, setDesignation] = useState(data?.designation || "");
-  const [gender, setGender] = useState(data?.gender || "");
-  const [course, setCourse] = useState(data?.course || "");
-  const [image, setImage] = useState(data?.image || null);
+  const navigate = useNavigate();
+
+  // State variables to store form input values
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [mobileNo, setMobile] = useState("");
+  const [designation, setDesignation] = useState("");
+  const [gender, setGender] = useState("");
+  const [course, setCourse] = useState("");
+  const [image, setImage] = useState(null);
+
+  // Ref for email input field
   const emailRef = useRef(null);
+
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const employeedata = {
@@ -23,11 +31,31 @@ const CreateEmployeeForm = ({ data }) => {
       avatar: image,
     };
 
-    const res = await employeeService.createEmployee(employeedata);
-
-    console.log(res);
-    alert("Employee created successfully!");
+    // Call the API to create or update employee data
+    employeeService
+      .createEmployee(employeedata)
+      .then(() => {
+        alert("Employee created successfully!");
+        navigate("/employee-list"); // Redirect to employee list page after successful submission
+      })
+      .catch((error) => {
+        alert(error);
+        navigate("/employee-list"); // Redirect to employee list page on error
+      });
   };
+
+  // Set form values based on data object when component is loaded
+  useEffect(() => {
+    if (data) {
+      setName(data.name || "");
+      setEmail(data.email || "");
+      setMobile(data.mobileNo || "");
+      setDesignation(data.designation || "");
+      setGender(data.gender || "");
+      setCourse(data.course || "");
+      setImage(data.avatar || null);
+    }
+  }, [data]);
 
   return (
     <div className="p-8 rounded shadow">
@@ -68,7 +96,6 @@ const CreateEmployeeForm = ({ data }) => {
             <select
               id="designation"
               className="px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full"
-              //   className="px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full"
               value={designation}
               onChange={(e) => setDesignation(e.target.value)}
               required
@@ -138,6 +165,7 @@ const CreateEmployeeForm = ({ data }) => {
               <span>BSC</span>
             </div>
           </div>
+
           {/* Image Upload */}
           <Input
             label="Img Upload: "

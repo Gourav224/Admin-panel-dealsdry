@@ -144,7 +144,6 @@ const updateEmployee = asyncHandler(async (req, res) => {
 // Delete employee 
 const deleteEmployee = asyncHandler(async (req, res) => {
     const { id } = req.body;
-
     // If id is not provided in the request body, return 400 error
     if (!id) {
         throw new ApiError(400, 'id is required ');
@@ -164,7 +163,22 @@ const deleteEmployee = asyncHandler(async (req, res) => {
     );
 });
 
+const getEmployee = asyncHandler(async (req, res) => {
+    // Fetch all employees from the database
+    const { id } = req.body;
+    // If id is not provided in the request body, return 400 error
+    if (!id) {
+        throw new ApiError(400, 'id is required ');
+    }
 
+    // Find employee by email and delete it
+    const data = await Employee.findById(id);
+
+    // Respond with success message and employee details array
+    return res.status(200).json(
+        new ApiResponse(200, data, "employees fetched successfully")
+    );
+});
 // @desc    Get list of all employees
 const getEmployeeList = asyncHandler(async (req, res) => {
     // Fetch all employees from the database
@@ -177,4 +191,4 @@ const getEmployeeList = asyncHandler(async (req, res) => {
 });
 
 
-export { registerEmployee, updateEmployee, getEmployeeList, deleteEmployee };
+export { registerEmployee, updateEmployee, getEmployeeList, deleteEmployee, getEmployee };

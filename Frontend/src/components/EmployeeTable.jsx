@@ -1,19 +1,15 @@
 import employeeService from "../config/employeeApi";
 import EmployeeTableBody from "./EmployeeTableBody";
-import EditEmployee from "../pages/EditEmployee"
 const EmployeeTable = ({ employees }) => {
-  // Handler function for editing an employee
-  const handleEditEmployee = (employeeId, employee) => {
-    // Add your logic for editing an employee here
-    <EditEmployee></EditEmployee>
-  };
-
   // Handler function for deleting an employee
   const handleDeleteEmployee = (employeeId) => {
     // Add your logic for deleting an employee here
-    employeeService.deleteEmployee(employeeId).then((response) => {
-      console.log("Deleted employee with id: ", response);
-    });
+    employeeService
+      .deleteEmployee(employeeId)
+      .then((response) => {
+        alert("employee Deleted  successfully ");
+      })
+      .catch((err) => alert("Error in delete operation"));
   };
 
   return (
@@ -40,8 +36,7 @@ const EmployeeTable = ({ employees }) => {
                 key={index}
                 employee={employee}
                 index={index}
-                onEdit={() => handleEditEmployee(employee.id, employee)}
-                onDelete={() => handleDeleteEmployee(employee.id)}
+                onDelete={() => handleDeleteEmployee(employee._id)}
               />
             ))}
         </tbody>

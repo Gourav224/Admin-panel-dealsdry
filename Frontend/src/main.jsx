@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import AddEmployee from "./pages/AddEmployee.jsx";
 import EmployeeList from "./pages/EmployeeList.jsx";
+import EditEmployee from "./pages/EditEmployee.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,12 @@ const router = createBrowserRouter([
         path: "/employee-list",
         element: <EmployeeList />,
       },
+      {
+        path: "/edit-employee/:slug",
+        element: (
+          <EditEmployee/>
+        ),
+    },
     ],
   },
 ]);
