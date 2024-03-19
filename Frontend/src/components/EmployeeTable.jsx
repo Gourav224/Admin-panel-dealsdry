@@ -14,7 +14,12 @@ const EmployeeTable = ({ employees }) => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Employee List</h2>
+      <div className="flex flex-wrap -mx-2">
+        <h2 className="text-xl font-bold mb-4">Employee List</h2>
+        <h2 className="text-xl font-bold ml-8 mb-4">
+          Count : {employees.length}
+        </h2>
+      </div>
       <table className="w-full border-collapse border border-gray-500">
         <thead>
           <tr>
